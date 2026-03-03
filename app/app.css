@@ -1,20 +1,26 @@
 @import "tailwindcss";
 
+/* -----------------------------
+   NextChance (Tailwind v4)
+   FLAT CSS (no nesting)
+   Works even if CSS nesting breaks
+------------------------------ */
+
 @theme {
-  /* NextChance – Clean White Premium */
   --color-background: #ffffff;
-  --color-foreground: #111111;
+  --color-foreground: #0a0a0a;
   --color-surface: #ffffff;
-  --color-surface-highlight: #f5f5f5;
+  --color-surface-highlight: #f3f4f6;
 
-  /* Primary = pure black for strong CTA */
-  --color-primary: #111111;
-
-  --color-secondary: #6b7280;
-  --color-accent: #000000;
+  /* Keep your accent if you want, but UI stays white/black */
+  --color-primary: #111827;    /* near-black */
+  --color-secondary: #3b82f6;
+  --color-accent: #8b5cf6;
 
   --font-serif: "Instrument Serif", serif;
   --font-sans: Inter, sans-serif;
+
+  --shadow-neobrutalism: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
 
 @layer base {
@@ -25,7 +31,7 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: Inter, sans-serif;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
 
@@ -35,118 +41,336 @@
   h4,
   h5,
   h6 {
-    font-family: "Instrument Serif", serif;
+    font-family: var(--font-serif);
   }
 
-  /* Subtle Scrollbar */
+  /* Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #ffffff;
+    background: var(--color-background);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #e5e7eb;
+    background: #d1d5db;
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #d1d5db;
+    background: #9ca3af;
   }
 }
 
 @layer components {
+  /* --------------------------------
+     Buttons (BEM-style)
+  ---------------------------------- */
   .btn {
-    @apply inline-flex items-center justify-center rounded-md font-medium transition-all duration-200
+    @apply inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200
     focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background
     disabled:opacity-50 disabled:cursor-not-allowed;
-
-    &.btn--primary {
-      /* Black premium button */
-      @apply bg-black text-white hover:bg-zinc-800 shadow-sm;
-    }
-
-    &.btn--secondary {
-      @apply bg-white text-black border border-zinc-200 hover:bg-zinc-50 shadow-sm;
-    }
-
-    &.btn--ghost {
-      @apply text-zinc-600 hover:text-black hover:bg-black/5;
-    }
-
-    &.btn--outline {
-      @apply bg-transparent border border-zinc-300 text-zinc-900 hover:bg-zinc-100;
-    }
-
-    &.btn--sm {
-      @apply px-3 py-1.5 text-xs uppercase tracking-wide;
-    }
-
-    &.btn--md {
-      @apply px-5 py-2.5 text-sm;
-    }
-
-    &.btn--lg {
-      @apply px-8 py-3 text-sm uppercase tracking-wide font-bold;
-    }
-
-    &.btn--full {
-      @apply w-full;
-    }
   }
 
+  .btn--primary {
+    @apply bg-black text-white hover:bg-zinc-900 shadow-sm;
+  }
+
+  .btn--secondary {
+    @apply bg-white text-black border border-zinc-200 hover:bg-zinc-50 shadow-sm;
+  }
+
+  .btn--ghost {
+    @apply text-zinc-600 hover:text-black hover:bg-black/5;
+  }
+
+  .btn--outline {
+    @apply bg-transparent border border-zinc-300 text-zinc-900 hover:bg-zinc-100;
+  }
+
+  .btn--sm {
+    @apply px-3 py-1.5 text-xs uppercase tracking-wide;
+  }
+
+  .btn--md {
+    @apply px-5 py-2.5 text-sm;
+  }
+
+  .btn--lg {
+    @apply px-8 py-3 text-sm uppercase tracking-wide font-bold;
+  }
+
+  .btn--full {
+    @apply w-full;
+  }
+
+  /* --------------------------------
+     Cards (generic)
+  ---------------------------------- */
   .card {
-    @apply bg-white border border-zinc-200 rounded-xl p-6 shadow-sm;
+    @apply bg-white border border-zinc-200 rounded-3xl p-6 shadow-sm;
   }
 
+  .card .header {
+    @apply flex justify-between items-center mb-4;
+  }
+
+  .card .header h3 {
+    @apply text-lg font-semibold text-black;
+  }
+
+  /* --------------------------------
+     Navbar
+  ---------------------------------- */
   .navbar {
-    @apply fixed top-0 w-full z-50 bg-white border-b border-zinc-200;
-
-    .inner {
-      @apply max-w-7xl mx-auto px-6 h-16 flex items-center justify-between;
-
-      .left {
-        @apply flex items-center space-x-8;
-
-        .brand {
-          @apply flex items-center space-x-2 cursor-pointer;
-
-          .name {
-            @apply text-xl font-serif font-bold text-black tracking-tight;
-          }
-        }
-
-        .links {
-          @apply hidden md:flex items-center space-x-6;
-
-          a {
-            @apply text-sm font-medium text-zinc-600 hover:text-black transition-colors;
-          }
-        }
-      }
-
-      .actions {
-        @apply flex items-center space-x-4;
-
-        .greeting {
-          @apply text-xs font-semibold uppercase tracking-wide text-zinc-500;
-        }
-
-        .login {
-          @apply text-xs font-bold uppercase tracking-wide text-zinc-900 hover:text-black transition-colors;
-        }
-
-        .cta {
-          @apply px-3 py-1.5 text-xs uppercase tracking-wide bg-black text-white rounded-md hover:bg-zinc-800;
-        }
-      }
-    }
+    @apply fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-black/5;
   }
 
+  .navbar .inner {
+    @apply max-w-7xl mx-auto px-6 h-16 flex items-center justify-between;
+  }
+
+  .navbar .left {
+    @apply flex items-center space-x-8;
+  }
+
+  .navbar .brand {
+    @apply flex items-center space-x-2 cursor-pointer;
+  }
+
+  .navbar .brand .logo {
+    @apply w-6 h-6 text-black;
+  }
+
+  .navbar .brand .name {
+    @apply text-xl font-serif font-bold text-black tracking-tight;
+  }
+
+  .navbar .links {
+    @apply hidden md:flex items-center space-x-6;
+  }
+
+  .navbar .links a {
+    @apply text-sm font-medium text-zinc-600 hover:text-black transition-colors;
+  }
+
+  .navbar .actions {
+    @apply flex items-center space-x-4;
+  }
+
+  .navbar .actions .greeting {
+    @apply text-xs font-semibold uppercase tracking-wide text-zinc-500;
+  }
+
+  .navbar .actions .login {
+    @apply text-xs font-bold uppercase tracking-wide text-zinc-900 hover:text-black transition-colors;
+  }
+
+  .navbar .actions .cta {
+    @apply inline-flex items-center justify-center rounded-md
+    font-medium transition-all duration-200
+    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background
+    disabled:opacity-50 disabled:cursor-not-allowed
+    px-3 py-1.5 text-xs uppercase tracking-wide
+    bg-black text-white hover:bg-zinc-900 shadow-sm;
+  }
+
+  /* --------------------------------
+     Auth modal (if you use it later)
+  ---------------------------------- */
+  .auth-modal {
+    @apply absolute inset-0 z-60 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4;
+  }
+
+  .auth-modal .panel {
+    @apply bg-white rounded-xl shadow-2xl max-w-md w-full p-6 text-center border border-zinc-200;
+  }
+
+  .auth-modal .panel .icon {
+    @apply w-12 h-12 bg-zinc-100 rounded-full flex items-center justify-center mx-auto mb-4;
+  }
+
+  .auth-modal .panel .icon .alert {
+    @apply text-black w-6 h-6;
+  }
+
+  .auth-modal .panel h3 {
+    @apply text-xl font-serif font-bold text-black mb-2;
+  }
+
+  .auth-modal .panel p {
+    @apply text-zinc-600 text-sm mb-6 leading-relaxed;
+  }
+
+  .auth-modal .panel .actions {
+    @apply flex flex-col space-y-3;
+  }
+
+  .auth-modal .panel .actions .confirm {
+    @apply bg-black hover:bg-zinc-900 text-white;
+  }
+
+  .auth-modal .panel .actions .cancel {
+    @apply text-xs text-zinc-400 hover:text-black mt-2;
+  }
+
+  /* --------------------------------
+     HOME (Landing)
+  ---------------------------------- */
   .home {
-    @apply min-h-screen bg-white text-black;
+    @apply min-h-screen bg-white relative overflow-x-hidden text-black;
+  }
+
+  .home .hero {
+    @apply pt-32 pb-20 px-6 max-w-7xl mx-auto flex flex-col items-center text-center;
+  }
+
+  .home .hero .announce {
+    @apply mb-8 inline-flex items-center px-3 py-1 rounded-md bg-white border border-zinc-200 shadow-sm;
+  }
+
+  .home .hero .announce .dot {
+    @apply w-4 h-4 rounded bg-zinc-100 flex items-center justify-center mr-2;
+  }
+
+  .home .hero .announce .dot .pulse {
+    @apply w-2 h-2 rounded-full bg-black animate-pulse;
+  }
+
+  .home .hero .announce p {
+    @apply text-[10px] font-bold uppercase tracking-widest text-zinc-600;
+  }
+
+  .home .hero h1 {
+    @apply text-6xl md:text-8xl font-serif leading-[0.95] text-black mb-8 max-w-5xl mx-auto;
+  }
+
+  .home .hero .subtitle {
+    @apply max-w-2xl mx-auto text-xs md:text-sm font-mono uppercase tracking-widest text-zinc-500 mb-10 leading-relaxed;
+  }
+
+  .home .hero .actions {
+    @apply flex flex-col sm:flex-row gap-4 justify-center mb-16;
+  }
+
+  .home .hero .actions .cta {
+    @apply inline-flex items-center justify-center rounded-md transition-all duration-200
+    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background
+    px-8 py-3 text-sm uppercase tracking-wide font-bold
+    bg-black text-white hover:bg-zinc-900 shadow-md;
+  }
+
+  .home .hero .actions .cta .icon {
+    @apply ml-2 w-4 h-4;
+  }
+
+  .home .hero .actions .demo {
+    @apply px-8 bg-white rounded-md hover:bg-zinc-50 border border-zinc-200;
+  }
+
+  /* Section blocks for your “For Players / For Recruiters / Access” */
+  .home .section {
+    @apply py-24 bg-white border-t border-zinc-100;
+  }
+
+  .home .section .section-inner {
+    @apply max-w-7xl mx-auto px-6;
+  }
+
+  .home .section .section-head {
+    @apply flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6;
+  }
+
+  .home .section .section-head .copy {
+    @apply max-w-2xl;
+  }
+
+  .home .section .section-head .copy h2 {
+    @apply text-4xl font-serif text-black mb-4;
+  }
+
+  .home .section .section-head .copy p {
+    @apply text-zinc-600 text-lg;
+  }
+
+  .home .feature-grid {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-6;
+  }
+
+  .home .feature-card {
+    @apply bg-white rounded-xl border border-zinc-200 shadow-sm p-6;
+  }
+
+  .home .feature-card .title {
+    @apply flex items-center gap-2 text-sm font-bold text-black;
+  }
+
+  .home .feature-card .desc {
+    @apply text-sm text-zinc-600 mt-2 leading-relaxed;
+  }
+
+  .home .feature-card .icon {
+    @apply w-4 h-4 text-black;
+  }
+
+  /* Access box */
+  .home .access-box {
+    @apply bg-white rounded-2xl border border-zinc-200 shadow-sm p-8 mt-8;
+  }
+
+  .home .access-box .kicker {
+    @apply text-xs font-mono uppercase tracking-widest text-zinc-500;
+  }
+
+  .home .access-box .title {
+    @apply text-2xl font-serif font-bold text-black mt-2;
+  }
+
+  .home .access-box .text {
+    @apply text-zinc-600 text-sm mt-2;
+  }
+
+  .home .access-box .actions {
+    @apply flex flex-col sm:flex-row gap-3 mt-6;
+  }
+
+  .home .access-box .actions .primary {
+    @apply bg-black text-white hover:bg-zinc-900;
+  }
+
+  .home .access-box .actions .secondary {
+    @apply bg-white text-black border border-zinc-200 hover:bg-zinc-50;
+  }
+}
+@layer utilities {
+  .fade-up {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: fadeUp 0.7s ease-out forwards;
+  }
+
+  .delay-1 {
+    animation-delay: 0.05s;
+  }
+
+  .delay-2 {
+    animation-delay: 0.15s;
+  }
+
+  .delay-3 {
+    animation-delay: 0.25s;
+  }
+
+  .delay-4 {
+    animation-delay: 0.35s;
+  }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
